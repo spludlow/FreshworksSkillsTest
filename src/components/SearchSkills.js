@@ -24,7 +24,10 @@ function SearchSkills() {
 
   return (
     <div className="container">
-      <input value={value} onChange={handleInputChange} />
+      <div className="input">
+        <label>Search Skills by Name</label>
+        <input value={value} onChange={handleInputChange} />
+      </div>{" "}
       {isFetching ? (
         <div>Loading...</div>
       ) : (

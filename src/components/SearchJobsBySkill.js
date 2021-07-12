@@ -17,7 +17,11 @@ function SearchJobsBySkill() {
 
   return (
     <div className="container">
-      <Autocomplete setSelected={setSkill} query={useSearchSkillsQuery} />
+      <Autocomplete
+        label="Select skill from autocomplete"
+        setSelected={setSkill}
+        query={useSearchSkillsQuery}
+      />
       {isFetching ? (
         <div>Loading...</div>
       ) : (

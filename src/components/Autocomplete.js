@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import "../App.css";
 import debounce from "lodash.debounce";
 
-function Autocomplete({ setSelected, query }) {
+function Autocomplete({ label, setSelected, query }) {
   const [value, setValue] = useState("");
   const [contains, setContains] = useState("");
   const [focused, setFocused] = useState(false);
@@ -28,13 +28,16 @@ function Autocomplete({ setSelected, query }) {
 
   return (
     <div className="autocomplete">
-      <input
-        className="autocomplete-input"
-        value={value}
-        onChange={handleInputChange}
-      />
-      <div className="autocomplete-suggestions">
-        {focused && (
+      <div className="input">
+        <label>{label}</label>
+        <input
+          className="autocomplete-input"
+          value={value}
+          onChange={handleInputChange}
+        />
+      </div>
+      {focused && (
+        <div className="autocomplete-suggestions">
           <>
             {isFetching ? (
               <div>Loading...</div>
@@ -58,8 +61,8 @@ function Autocomplete({ setSelected, query }) {
               </>
             )}
           </>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

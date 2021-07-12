@@ -24,7 +24,11 @@ function SearchJobs() {
 
   return (
     <div className="container">
-      <input value={value} onChange={handleInputChange} />
+      <div className="input">
+        <label>Search Jobs by Title</label>
+        <input value={value} onChange={handleInputChange} />
+      </div>
+
       {isFetching ? (
         <div>Loading...</div>
       ) : (

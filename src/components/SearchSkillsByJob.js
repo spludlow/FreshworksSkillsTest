@@ -15,10 +15,13 @@ function SearchSkillsByJob() {
     error,
   } = useGetSkillsForJobQuery(job?.uuid, { skip: !job });
 
-  console.log(job);
   return (
     <div className="container">
-      <Autocomplete setSelected={setJob} query={useSearchJobsQuery} />
+      <Autocomplete
+        label="Select job from autocomplete"
+        setSelected={setJob}
+        query={useSearchJobsQuery}
+      />
       {isFetching ? (
         <div>Loading...</div>
       ) : (
