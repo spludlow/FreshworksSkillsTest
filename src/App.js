@@ -1,56 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React, { useState } from "react";
+import logo from "./logo.svg";
+import { Counter } from "./features/counter/Counter";
+import { useSearchJobsQuery } from "./features/jobSkills/job-skills-api-slice";
+import "./App.css";
+import SearchJobs from "./SearchJobs";
 
 function App() {
+  const [searchBy, setSearchBy] = useState("jobs"); // jobs, skills, skillsByJob, jobsBySkill
+  const [contains, setContains] = useState("");
+  const {
+    data = [],
+    isLoading,
+    error,
+  } = useSearchJobsQuery(contains, { skip: !contains });
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
+      <div>
+        <h1>Workforce Data Initiative</h1>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Welcome to the Workforce Data Initiative Skills and Job search! Select
+          how you'd like to search the database below, and get cracking!
         </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+      </div>
+      <div className="button-container">
+        <button className={`button`} onClick={() => setSearchBy("jobs")}>
+          Search Jobs
+        </button>
+        <button className={`button`} onClick={() => setSearchBy("skills")}>
+          Search Skills
+        </button>
+        <button className={`button`} onClick={() => setSearchBy("skillsByJob")}>
+          Search Skills by Job
+        </button>
+        <button className={`button`} onClick={() => setSearchBy("jobsBySkill")}>
+          Search Jobs by Skill
+        </button>
+      </div>
+      {searchBy === "jobs" && <SearchJobs />}
     </div>
   );
 }
