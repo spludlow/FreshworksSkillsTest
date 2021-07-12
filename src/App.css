@@ -4,6 +4,12 @@
   max-width: 1020px;
 }
 
+@media (max-width: 400px) {
+  .App {
+    padding: 10px;
+  }
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

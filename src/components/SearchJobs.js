@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
-import { useSearchJobsQuery } from "./features/jobSkills/job-skills-api-slice";
-import "./App.css";
+import { useSearchJobsQuery } from "../features/jobSkills/job-skills-api-slice";
+import "../App.css";
 import debounce from "lodash.debounce";
 
 function SearchJobs() {
@@ -23,7 +23,7 @@ function SearchJobs() {
   };
 
   return (
-    <div className="">
+    <div className="container">
       <input value={value} onChange={handleInputChange} />
       {isFetching ? (
         <div>Loading...</div>
