@@ -3,9 +3,11 @@ import {
   useGetSkillsForJobQuery,
   useSearchJobsQuery,
 } from "../features/jobSkills/job-skills-api-slice";
-import "../App.css";
+
 import Autocomplete from "./Autocomplete";
+import ResultsTable from "./Table";
 import { ErrorResult, NoResults } from "./CommonComponents";
+import "../App.css";
 
 function SearchSkillsByJob() {
   const [job, setJob] = useState(null);
@@ -15,6 +17,28 @@ function SearchSkillsByJob() {
     isFetching,
     error,
   } = useGetSkillsForJobQuery(job?.uuid, { skip: !job });
+
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "Skill Name",
+        accessor: "skill_name",
+      },
+      {
+        Header: "Description",
+        accessor: "description",
+      },
+      {
+        Header: "Importance",
+        accessor: "importance",
+      },
+      {
+        Header: "Level",
+        accessor: "level",
+      },
+    ],
+    []
+  );
 
   return (
     <div className="container">
@@ -32,26 +56,7 @@ function SearchSkillsByJob() {
           ) : (
             <>
               {data.skills && data.skills.length ? (
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Skill Name</th>
-                      <th>Skill Description</th>
-                      <th>Importance</th>
-                      <th>Level</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data.skills.map((skill) => (
-                      <tr key={skill.skill_uuid}>
-                        <td>{skill.skill_name}</td>
-                        <td>{skill.description}</td>
-                        <td>{skill.importance}</td>
-                        <td>{skill.level}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <ResultsTable columns={columns} data={data.skills} />
               ) : (
                 <NoResults />
               )}

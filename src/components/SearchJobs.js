@@ -1,8 +1,11 @@
 import React, { useCallback, useState } from "react";
 import { useSearchJobsQuery } from "../features/jobSkills/job-skills-api-slice";
-import "../App.css";
+
 import debounce from "lodash.debounce";
+
+import ResultsTable from "./Table";
 import { ErrorResult, NoResults } from "./CommonComponents";
+import "../App.css";
 
 function SearchJobs() {
   const [value, setValue] = useState("");
@@ -23,6 +26,16 @@ function SearchJobs() {
     debouncedSearch(event.target.value);
   };
 
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "Job Title",
+        accessor: "suggestion",
+      },
+    ],
+    []
+  );
+
   return (
     <div className="container">
       <div className="input">
@@ -39,20 +52,7 @@ function SearchJobs() {
           ) : (
             <>
               {data && data.length ? (
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Job Name</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data.map((job) => (
-                      <tr key={job.uuid}>
-                        <td>{job.suggestion}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <ResultsTable columns={columns} data={data} />
               ) : (
                 <NoResults />
               )}
