@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import { useSearchJobsQuery } from "../features/jobSkills/job-skills-api-slice";
 import "../App.css";
 import debounce from "lodash.debounce";
+import { ErrorResult, NoResults } from "./CommonComponents";
 
 function SearchJobs() {
   const [value, setValue] = useState("");
@@ -34,25 +35,28 @@ function SearchJobs() {
       ) : (
         <>
           {error ? (
-            <div>
-              <h3>Error!</h3>
-              <p>{error.data.error.message}</p>
-            </div>
+            <ErrorResult error={error} />
           ) : (
-            <table>
-              <thead>
-                <tr>
-                  <th>Job Name</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((job) => (
-                  <tr key={job.uuid}>
-                    <td>{job.suggestion}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <>
+              {data && data.length ? (
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Job Name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.map((job) => (
+                      <tr key={job.uuid}>
+                        <td>{job.suggestion}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <NoResults />
+              )}
+            </>
           )}
         </>
       )}

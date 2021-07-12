@@ -5,6 +5,7 @@ import {
 } from "../features/jobSkills/job-skills-api-slice";
 import "../App.css";
 import Autocomplete from "./Autocomplete";
+import { ErrorResult, NoResults } from "./CommonComponents";
 
 function SearchJobsBySkill() {
   const [skill, setSkill] = useState(null);
@@ -27,33 +28,32 @@ function SearchJobsBySkill() {
       ) : (
         <>
           {error ? (
-            <div>
-              <h3>Error!</h3>
-              <p>
-                {error.data.error.message} ({skill.suggestion})
-              </p>
-            </div>
+            <ErrorResult error={error} />
           ) : (
-            <table>
-              <thead>
-                <tr>
-                  <th>Job Name</th>
-                  <th>Importance</th>
-                  <th>Level</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.jobs
-                  ? data.jobs.map((job) => (
+            <>
+              {data.jobs && data.jobs.length ? (
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Job Name</th>
+                      <th>Importance</th>
+                      <th>Level</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.jobs.map((job) => (
                       <tr key={skill.skill_uuid}>
                         <td>{job.job_title}</td>
                         <td>{job.importance}</td>
                         <td>{job.level}</td>
                       </tr>
-                    ))
-                  : null}
-              </tbody>
-            </table>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <NoResults />
+              )}
+            </>
           )}
         </>
       )}
