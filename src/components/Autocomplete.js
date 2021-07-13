@@ -2,8 +2,10 @@ import React, { useCallback, useState } from "react";
 import "../App.css";
 import debounce from "lodash.debounce";
 
-function Autocomplete({ label, setSelected, query }) {
-  const [value, setValue] = useState("");
+function Autocomplete({ label, selected, setSelected, query }) {
+  const [value, setValue] = useState(
+    selected ? selected?.title || selected?.suggestion : ""
+  );
   const [contains, setContains] = useState("");
   const [focused, setFocused] = useState(false);
 

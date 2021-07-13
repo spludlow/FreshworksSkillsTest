@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from "react";
-import { useSearchSkillsQuery } from "../features/jobSkills/job-skills-api-slice";
+import { useDispatch, useSelector } from "react-redux";
+import { useSearchSkillsQuery } from "../features/job-skills-api-slice";
+import { setContainsValue, setSkillValue } from "../features/skills-slice";
 
 import debounce from "lodash.debounce";
 
@@ -8,8 +10,10 @@ import { ErrorResult, NoResults } from "./CommonComponents";
 import "../App.css";
 
 function SearchSkills() {
-  const [value, setValue] = useState("");
-  const [contains, setContains] = useState("");
+  const dispatch = useDispatch();
+  const value = useSelector((state) => state.skill.value);
+  const contains = useSelector((state) => state.skill.contains);
+
   const {
     data = [],
     isFetching,
@@ -17,12 +21,12 @@ function SearchSkills() {
   } = useSearchSkillsQuery(contains, { skip: !contains });
 
   const debouncedSearch = useCallback(
-    debounce((nextValue) => setContains(nextValue), 250),
+    debounce((nextValue) => dispatch(setContainsValue(nextValue)), 250),
     []
   );
 
   const handleInputChange = (event) => {
-    setValue(event.target.value);
+    dispatch(setSkillValue(event.target.value));
     debouncedSearch(event.target.value);
   };
 

@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   useGetJobsForSkillQuery,
   useSearchSkillsQuery,
-} from "../features/jobSkills/job-skills-api-slice";
+} from "../features/job-skills-api-slice";
+import { setSelectedSkill } from "../features/selected-skill-slice";
 
 import Autocomplete from "./Autocomplete";
 import ResultsTable from "./Table";
@@ -10,7 +12,8 @@ import { ErrorResult, NoResults } from "./CommonComponents";
 import "../App.css";
 
 function SearchJobsBySkill() {
-  const [skill, setSkill] = useState(null);
+  const dispatch = useDispatch();
+  const skill = useSelector((state) => state.selectedSkill.skill);
 
   const {
     data = { skills: [] },
@@ -40,7 +43,8 @@ function SearchJobsBySkill() {
     <div className="container">
       <Autocomplete
         label="Select skill from autocomplete"
-        setSelected={setSkill}
+        selected={skill}
+        setSelected={(v) => dispatch(setSelectedSkill(v))}
         query={useSearchSkillsQuery}
       />
       {isFetching ? (
