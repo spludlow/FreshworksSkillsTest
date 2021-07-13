@@ -112,6 +112,50 @@ label {
   background: #ffd3d3;
 }
 
+/* table */
+.result-table {
+  overflow: auto;
+}
+.result-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.result-table table th,
+.result-table table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+.result-table table th {
+  padding: 12px 8px;
+  text-align: left;
+  color: white;
+  background-color: #2a84c0;
+}
+
+.pagination {
+  margin-top: 10px;
+}
+
+.pagination button {
+  background-color: #ddd;
+  border: none;
+  padding: 10px 24px;
+}
+
+.pagination button:hover {
+  background-color: #eee;
+}
+.pagination button:disabled {
+  background-color: #ccc;
+}
+
+.pagination select {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
 @media (max-width: 400px) {
   .App {
     padding: 10px;
